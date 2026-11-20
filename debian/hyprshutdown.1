@@ -1,0 +1,112 @@
+.TH HYPRSHUTDOWN 1 "User Commands"
+.SH NAME
+hyprshutdown \- graceful shutdown utility for Hyprland
+.SH SYNOPSIS
+.B hyprshutdown
+[\fIOPTION\fR]...
+.SH DESCRIPTION
+.B hyprshutdown
+is a graceful shutdown utility for the Hyprland Wayland compositor.
+It opens a GUI dialog and gracefully asks running applications to exit,
+then quits Hyprland.
+.PP
+This is the recommended way to exit Hyprland. Using other methods
+(such as
+.B dispatch exit
+) will cause applications to be forcefully killed rather than
+given the opportunity to exit cleanly.
+.SH OPTIONS
+.TP
+.BI \-\-vt " N"
+Switch to virtual terminal
+.I N
+after Hyprland exits. Useful on NVIDIA + SDDM systems to prevent a black
+screen or hang on logout.
+.TP
+.B \-\-dry\-run
+Show the shutdown UI without actually closing any applications or exiting
+Hyprland.
+.TP
+.B \-\-no\-exit
+Close applications gracefully but do not exit Hyprland afterwards.
+.TP
+.BR \-\-top\-label ", " \-t " \fITEXT\fR"
+Set custom text to display at the top of the shutdown dialog.
+.TP
+.BR \-\-post\-cmd ", " \-p " \fICOMMAND\fR"
+Run
+.I COMMAND
+after Hyprland has exited. Can be used to power off or reboot the system.
+.TP
+.B \-\-no\-fork
+Run in the foreground instead of daemonizing.
+.TP
+.B \-\-verbose
+Enable debug logging.
+.TP
+.BR \-\-help ", " \-h
+Show a help message and exit.
+.SH EXAMPLES
+Log out of Hyprland:
+.PP
+.RS
+.B hyprshutdown
+.RE
+.PP
+Shut the system down after closing apps:
+.PP
+.RS
+.B hyprshutdown \-t 'Shutting down...' \-\-post\-cmd 'shutdown \-P 0'
+.RE
+.PP
+Reboot the system after closing apps:
+.PP
+.RS
+.B hyprshutdown \-t 'Restarting...' \-\-post\-cmd 'reboot'
+.RE
+.PP
+Preview the dialog without doing anything:
+.PP
+.RS
+.B hyprshutdown \-\-dry\-run
+.RE
+.SH NVIDIA + SDDM USERS
+If you experience a black screen or hang when logging out with an NVIDIA GPU
+and SDDM display manager, use the
+.B \-\-vt
+flag to force a virtual terminal switch after exit:
+.PP
+.RS
+.B hyprshutdown \-\-vt 2
+.RE
+.PP
+SDDM typically runs on VT2; check your system configuration if a different
+terminal is needed.
+.PP
+The VT switch is performed via
+.BR chvt (1)
+and requires passwordless sudo access for that command. To configure this,
+run:
+.PP
+.RS
+.EX
+echo "$USER ALL=(ALL) NOPASSWD: /usr/bin/chvt" | sudo tee /etc/sudoers.d/chvt
+sudo chmod 440 /etc/sudoers.d/chvt
+.EE
+.RE
+.PP
+This is considered safe because
+.B chvt
+only switches virtual terminals and cannot be exploited for privilege
+escalation.
+.SH SEE ALSO
+.BR hyprland (1),
+.BR chvt (1),
+.BR shutdown (8),
+.BR reboot (8)
+.SH AUTHORS
+This manual page was written for the Debian project based on the
+Hyprland wiki at
+.UR https://wiki.hyprland.org
+https://wiki.hyprland.org
+.UE .

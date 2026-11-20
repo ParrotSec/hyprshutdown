@@ -1,0 +1,24 @@
+Source: hyprshutdown
+Section: x11
+Maintainer: Parrot Dev Team <team@parrotsec.org>
+Uploaders: Lorenzo "Palinuro" Faletra <palinuro@parrotsec.org>
+Build-Depends:
+ debhelper-compat (= 13),
+ cmake,
+ libdrm-dev,
+ libglaze-dev (>= 6.1.0),
+ libhyprtoolkit-dev,
+ libhyprutils-dev (>= 0.11.0),
+ libpixman-1-dev,
+Standards-Version: 4.7.2
+Rules-Requires-Root: no
+Homepage: https://github.com/hyprwm/hyprshutdown
+Vcs-Browser: https://gitlab.com/parrotsec/packages/hyprshutdown
+Vcs-Git: https://gitlab.com/parrotsec/packages/hyprshutdown.git
+
+Package: hyprshutdown
+Priority: optional
+Architecture: any
+Description: graceful shutdown utility for Hyprland
+ A graceful shutdown/logout utility for Hyprland, which prevents apps
+ from crashing / dying unexpectedly.
