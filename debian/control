@@ -19,6 +19,9 @@ Vcs-Git: https://gitlab.com/parrotsec/packages/hyprshutdown.git
 Package: hyprshutdown
 Priority: optional
 Architecture: any
+Depends:
+ ${misc:Depends},
+ ${shlibs:Depends},
 Description: graceful shutdown utility for Hyprland
  A graceful shutdown/logout utility for Hyprland, which prevents apps
  from crashing / dying unexpectedly.
